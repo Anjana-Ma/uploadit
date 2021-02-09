@@ -10,8 +10,7 @@
  * https://t.me/TheDarkW3b
  */
 define('FILES_PATH', __DIR__.'/files');
-define('WEBSERVER_BASE_URL', 'http://botz-zone.tk');
-define('WEBSERVER_BASE_URL', '45.56.83.126');
+define('WEBSERVER_BASE_URL', 'https://botz-uploader.herokuapp.com');
 define('FILES_EXPIRE_TIME', 24 * 3600); // in seconds
 
 set_time_limit(0);
