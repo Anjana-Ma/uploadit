@@ -10,7 +10,7 @@
  * https://t.me/TheDarkW3b
  */
 define('FILES_PATH', __DIR__.'/files');
-define('WEBSERVER_BASE_URL', 'botz-uploaditz.herokuapp.com');
+define('WEBSERVER_BASE_URL', 'http://botz-zone.tk');
 define('FILES_EXPIRE_TIME', 24 * 3600); // in seconds
 
 set_time_limit(0);
@@ -60,7 +60,7 @@ class EventHandler extends \danog\MadelineProto\EventHandler
         try {
             if (isset($update['message']['media']) && ($update['message']['media']['_'] == 'messageMediaPhoto' || $update['message']['media']['_'] == 'messageMediaDocument')) {
                 $message_id = $update['message']['id'];
-                $sent_message = yield $this->messages->sendMessage(['peer' => $update, 'message' => 'Generating download link… 0%', 'reply_to_msg_id' => $message_id]);
+                $sent_message = yield $this->messages->sendMessage(['peer' => $update, 'message' => '⚙️ <b>Generating download link… 0%</b>', 'reply_to_msg_id' => $message_id]);
                 $time = time();
                 $last_progress = 0;
                 $queue_id = $this->randomString().time();
@@ -72,19 +72,19 @@ class EventHandler extends \danog\MadelineProto\EventHandler
                             $last_progress = $progress;
 
                             try {
-                                yield $this->messages->editMessage(['id' => $sent_message['id'], 'peer' => $update, 'message' => 'Generating download link… '.$progress.'%'], ['queue' => $queue_id]);
+                                yield $this->messages->editMessage(['id' => $sent_message['id'], 'peer' => $update, 'message' => '⚙️ <b>Generating download link… </b>'.$progress.'%'], ['queue' => $queue_id]);
                             } catch (Exception $e) {
                             }
                         }
                     }
                 ));
-                yield $this->messages->editMessage(['id' => $sent_message['id'], 'peer' => $update, 'message' => 'Download link Generated in '.(time() - $time)." seconds!\n\n💾 ".basename($output_file_name)."\n\n📥 ".rtrim(WEBSERVER_BASE_URL, '/').'/'.str_replace(__DIR__.'/', '', str_replace(' ', '%20', $output_file_name))."\n\nThis link will be expired in 24 hours.", 'reply_to_msg_id' => $message_id], ['queue' => $queue_id]);
+                yield $this->messages->editMessage(['id' => $sent_message['id'], 'peer' => $update, 'message' => '💌 <b>Download link Generated in </b>'.(time() - $time)." seconds!\n\n<b>💾 File Name : </b>".basename($output_file_name)."\n\n<b>📥 File Link : </b>".rtrim(WEBSERVER_BASE_URL, '/').'/'.str_replace(__DIR__.'/', '', str_replace(' ', '%20', $output_file_name))."\n\n💣 <b>This link will be expired in 24 hours.</b>", 'reply_to_msg_id' => $message_id], ['queue' => $queue_id]);
             } elseif (isset($update['message']['message'])) {
                 $message_id = $update['message']['id'];
                 $text = $update['message']['message'];
                 $chat_id = $update['message']['from_id'];
                 if ($text == '/start') {
-                    yield $this->messages->sendMessage(['peer' => $update, 'message' => 'Hi! please send me any file url or file uploaded in Telegram and I will upload to Telegram as file or generate download link of that file. \n Kindly Donate @ConQuerorRobot If You Like This \n Support Group @CuratorCrew', 'reply_to_msg_id' => $message_id]);
+                    yield $this->messages->sendMessage(['peer' => $update, 'message' => '<b>Hi! 👋 please send me any file url or file uploaded in Telegram and I will upload to Telegram as file or generate download link of that file. \n Kindly Donate @I_am_401 If You Like This \n Bots Channel @BotZ_Zone</b>', 'reply_to_msg_id' => $message_id]);
 
                     return;
                 }
